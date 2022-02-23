@@ -24,7 +24,7 @@ namespace UserService.Utilities
                     new UserDAL()
                     {
                         UserId = new Guid("fc0bb1cc-0a93-406f-bf39-9be7ab81438b"),
-                        Username = "dev",
+                        Username = "Dev",
                         Name = "Developer",
                         Surname = "Fullstack",
                         Email = "dev@example.com"

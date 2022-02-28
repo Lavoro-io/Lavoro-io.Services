@@ -34,11 +34,11 @@ namespace UserService.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult<bool> UpdateUser(UserDTO user)
+        public ActionResult<UserDTO> UpdateUser(UserDTO user)
         {
-            var update = _userService.UpdateUser(user);
+            var newUser = _userService.UpdateUser(user);
 
-            return Ok(update);
+            return Ok(newUser);
         }
     }
 }

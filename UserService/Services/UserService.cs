@@ -77,19 +77,26 @@ namespace UserService.Services
             };
         }
 
-        public bool UpdateUser(UserDTO user)
+        public UserDTO UpdateUser(UserDTO user)
         {
             var userToUpdate = GetUserDb(user.UserId);
 
             userToUpdate.Username = user.Username;
-            userToUpdate.Email = user.Email;
+            //userToUpdate.Email = user.Email;
             userToUpdate.Surname = user.Surname;
             userToUpdate.Name = user.Name;
 
-            var newUser = _dbContext.Users.Update(userToUpdate);
+            _dbContext.Users.Update(userToUpdate);
             _dbContext.SaveChanges();
 
-            return newUser != null;
+            return new UserDTO()
+            {
+                UserId = userToUpdate.UserId,
+                Username = userToUpdate.Username,
+                Email = userToUpdate.Email,
+                Name = userToUpdate.Name,
+                Surname = userToUpdate.Surname
+            };
         }
 
         public void DeleteUser(Guid uuid)

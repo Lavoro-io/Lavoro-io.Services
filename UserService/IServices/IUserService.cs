@@ -7,7 +7,7 @@ namespace UserService.IServices
     public interface IUserService
     {
         UserDTO GetUser(Guid uuid);
-        bool UpdateUser(UserDTO user);
+        UserDTO UpdateUser(UserDTO user);
         void DeleteUser(Guid uuid);
 
         //Auth Methods

@@ -34,9 +34,16 @@ namespace UserService.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult<UserDTO> UpdateUser(UserDTO user)
+        public ActionResult<UserDTO> UpdateUser(UpdateUserDTO user)
         {
-            var newUser = _userService.UpdateUser(user);
+            var contextUser = (UserDTO)HttpContext.Items["user"];
+            var newUser = _userService.UpdateUser(new UserDTO()
+            {
+                UserId = contextUser.UserId,
+                Username = user.Username,
+                Name = user.Name,
+                Surname = user.Surname
+            });
 
             return Ok(newUser);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,11 @@ namespace UserService.DAL
 
         [Required]
         public string Email { get; set; }
+
+        [Required, MaxLength(32), MinLength(8)]
+        public string Password { get; set; }
+
+        public bool Enabled { get; set; }
     }
 }
 

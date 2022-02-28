@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using UserService.Utilities;
 using UserService.IServices;
 using UserService.DTO;
+using System;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
 
 namespace UserService.Controllers
 {
@@ -27,23 +30,6 @@ namespace UserService.Controllers
             if(user == null) return NotFound("User not found");
 
             return Ok(user);   
-        }
-
-        [HttpGet("activate/{token}")]
-        public ActionResult RegisterUser(string token, string redirectUri)
-        {
-            var user = AppExstension.FromBase64<UserDTO>(token);
-
-            if (user == null) return Problem("Expired Data");
-
-            _userService.AddUser(user);
-
-            using(var httpClient = new HttpClient())
-            {
-                httpClient.PutAsync("https://lvrio-identityprovider.azurewebsites.net/auth?uuid=" + user.UserId, null);
-            }
-
-            return Redirect(redirectUri);
         }
 
         [HttpPut]

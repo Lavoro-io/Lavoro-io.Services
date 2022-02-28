@@ -27,7 +27,9 @@ namespace UserService.Utilities
                         Username = "Dev",
                         Name = "Developer",
                         Surname = "Fullstack",
-                        Email = "dev@example.com"
+                        Email = "dev@example.com",
+                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                        Enabled = true
                     },
                 };
 

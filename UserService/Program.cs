@@ -2,6 +2,9 @@ using UserService.Utilities;
 using UserService.IServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 const string dbName = "LVR-IO";
 

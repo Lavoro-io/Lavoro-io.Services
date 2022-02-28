@@ -1,3 +1,4 @@
+using System;
 using UserService.DTO;
 
 namespace UserService.IServices
@@ -6,8 +7,11 @@ namespace UserService.IServices
     {
         UserDTO GetUser(Guid uuid);
         bool UpdateUser(UserDTO user);
-        bool DeleteUser(Guid uuid);
-        bool AddUser(UserDTO user);
+        void DeleteUser(Guid uuid);
+
+        //Auth Methods
+        bool RegisterUser(RegisterFormDTO registerForm);
+        AuthDTO GetToken(LoginFormDTO loginForm);
     }
 }
 

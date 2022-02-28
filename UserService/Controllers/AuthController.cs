@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Saml;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -28,6 +29,25 @@ namespace UserService.Controllers
             var result = _userService.GetToken(loginForm);
 
             return Ok(result);
+        }
+
+        [HttpGet("saml"), Obsolete] //For future purpose
+        public ActionResult SamlRequest(string baseHref, string redirectUri)
+        {
+            var redirectUrl = _userService.SamlRequest(baseHref, redirectUri);
+
+            //redirect the user to the SAML provider
+            return Redirect(redirectUrl);
+        }
+
+        [HttpPost, Obsolete] //For future purpose
+        public ActionResult SamlConsume()
+        {
+            var auth = _userService.SamlResponse(Request);
+
+            Response.Cookies.Append("Authorization", "Bearer " + auth.Token);
+
+            return Ok();
         }
 
         [HttpPost("register")]

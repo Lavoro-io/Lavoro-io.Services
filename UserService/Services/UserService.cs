@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using BC = BCrypt.Net.BCrypt;
+using Saml;
 
 namespace UserService.Services
 {
@@ -128,6 +129,44 @@ namespace UserService.Services
             var token = generateJwtToken(user);
 
             return token;
+        }
+
+        public string SamlRequest(string baseHref, string redirectUri)
+        {
+            //TODO: specify the SAML provider url here, aka "Endpoint"
+            var samlEndpoint = "<SAML-ENDPOINT>";
+
+            var request = new AuthRequest(
+                baseHref, //TODO: put your app's "entity ID" here
+                redirectUri //TODO: put Assertion Consumer URL (where the provider should redirect users after authenticating)
+            );
+
+            return request.GetRedirectUrl(samlEndpoint);
+        }
+
+        public AuthDTO SamlResponse(HttpRequest samlResponseRequest)
+        {
+            // 1. TODO: specify the certificate that your SAML provider gave you
+            string samlCertificate = @"-----BEGIN CERTIFICATE-----
+                                    BLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAHBLAH
+                                    -----END CERTIFICATE-----
+                                    ";
+
+            // 2. Let's read the data - SAML providers usually POST it into the "SAMLResponse" var
+            Saml.Response samlResponse = new Response(samlCertificate, samlResponseRequest.Form["SAMLResponse"]);
+
+            // 3. We're done!
+            if (samlResponse.IsValid())
+            {
+                //WOOHOO!!! user is logged in
+                var uuid = samlResponse.GetNameID();
+
+                var token = generateJwtToken(new UserDAL() { UserId = new Guid(uuid) });
+
+                return token;
+            }
+
+            return null;
         }
     }
 

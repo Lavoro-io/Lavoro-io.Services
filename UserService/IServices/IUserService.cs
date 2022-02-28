@@ -1,3 +1,4 @@
+using Saml;
 using System;
 using UserService.DTO;
 
@@ -12,6 +13,10 @@ namespace UserService.IServices
         //Auth Methods
         bool RegisterUser(RegisterFormDTO registerForm);
         AuthDTO GetToken(LoginFormDTO loginForm);
+
+        //Saml Login
+        string SamlRequest(string baseHref, string redirectUri);
+        AuthDTO SamlResponse(HttpRequest samlResponse);
     }
 }
 

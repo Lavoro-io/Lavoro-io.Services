@@ -3,6 +3,7 @@ using UserService.Utilities;
 using UserService.DTO;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using UserService.DAL;
 using System.Text;
@@ -10,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using BC = BCrypt.Net.BCrypt;
 using Saml;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserService.Services
 {
@@ -25,12 +27,17 @@ namespace UserService.Services
         #region Private Methods
         private UserDAL GetUserDb(Guid uuid)
         {
-            return _dbContext.Users.Where(x => x.UserId == uuid && x.Enabled).FirstOrDefault();
+            return _dbContext.Users.Include(x => x.Role).Where(x => x.UserId == uuid && x.Enabled).FirstOrDefault();
         }
 
         private UserDAL GetUserByEmail(string email)
         {
-            return _dbContext.Users.Where(x => x.Email == email && x.Enabled).FirstOrDefault();
+            return _dbContext.Users.Include(x => x.Role).Where(x => x.Email == email && x.Enabled).FirstOrDefault();
+        }
+
+        private Guid GetRoleByEnum(Roles role)
+        {
+            return _dbContext.Roles.Where(x => x.RoleEnum == role).FirstOrDefault().RoleId;
         }
 
         private AuthDTO generateJwtToken(UserDAL user)
@@ -73,7 +80,8 @@ namespace UserService.Services
                 Username = user.Username,
                 Email = user.Email,
                 Name = user.Name,
-                Surname = user.Surname
+                Surname = user.Surname,
+                Role = user.Role.Name
             };
         }
 
@@ -117,7 +125,8 @@ namespace UserService.Services
                 Surname = registerForm.Surname,
                 Name = registerForm.Name,
                 Username = registerForm.Email.Split("@")[0],
-                Password = BC.HashPassword(registerForm.Password)
+                Password = BC.HashPassword(registerForm.Password),
+                RoleId = GetRoleByEnum(Roles.User)
             });
 
             _dbContext.SaveChanges();

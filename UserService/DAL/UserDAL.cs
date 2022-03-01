@@ -27,6 +27,9 @@ namespace UserService.DAL
         [Required, MaxLength(32), MinLength(8)]
         public string Password { get; set; }
 
+        public Guid RoleId { get; set; }
+        public RoleDAL Role { get; set; }
+
         public bool Enabled { get; set; }
     }
 }

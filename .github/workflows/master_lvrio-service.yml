@@ -39,7 +39,7 @@ jobs:
         with:
           files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
         env:
-          ConnectionStrings.Default: ${{ secrets.JWT_SECRET_KEY }}
+          Settings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
           App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
   deploy:

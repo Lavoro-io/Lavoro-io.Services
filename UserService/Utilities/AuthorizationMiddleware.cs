@@ -12,10 +12,12 @@ namespace UserService.Utilities
     public class AuthorizationMiddleware
     {
         private readonly RequestDelegate _next;
+        protected readonly IConfiguration _configuration;
 
-        public AuthorizationMiddleware(RequestDelegate next)
+        public AuthorizationMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
+            _configuration = configuration;
         }
 
         public async Task Invoke(HttpContext context, IUserService userService)
@@ -33,7 +35,7 @@ namespace UserService.Utilities
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("25f02b821910431fae479d1898a7195f"); //Move to a better place and change it
+                var key = Encoding.ASCII.GetBytes(_configuration["Settings:JwtSecret"]); //Move to a better place and change it
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

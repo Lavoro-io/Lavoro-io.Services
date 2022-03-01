@@ -18,10 +18,12 @@ namespace UserService.Services
     public class UserService : IUserService
     {
         private readonly UserContext _dbContext;
+        protected readonly IConfiguration _configuration;
 
-        public UserService(UserContext dbContext)
+        public UserService(UserContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _configuration = configuration;
         }
 
         #region Private Methods
@@ -46,7 +48,7 @@ namespace UserService.Services
             var tokenHandler = new JwtSecurityTokenHandler();
 
             //Temp key for test purpose. Move key on better place
-            var key = Encoding.ASCII.GetBytes("25f02b821910431fae479d1898a7195f");
+            var key = Encoding.ASCII.GetBytes(_configuration["Settings:JwtSecret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

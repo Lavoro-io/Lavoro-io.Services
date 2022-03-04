@@ -12,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddRouting();
+
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -73,15 +77,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseCors("corsapp");
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapHub<ChatHub>("/chat");
-
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chat");
 
 app.Run();
 

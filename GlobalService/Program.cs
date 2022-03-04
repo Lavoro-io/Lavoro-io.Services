@@ -49,7 +49,11 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("https://lavoro-io.azurewebsites.net/", "http://localhost:4200/").AllowAnyMethod().AllowAnyHeader();
+    builder.AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials()
+           .WithOrigins("https://lavoro-io.azurewebsites.net",
+                        "http://localhost:4200");
 }));
 
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();

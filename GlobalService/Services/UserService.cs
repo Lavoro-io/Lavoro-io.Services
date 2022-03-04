@@ -121,7 +121,8 @@ namespace GlobalService.Services
 
         public bool RegisterUser(RegisterFormDTO registerForm)
         {
-            var newUser = _dbContext.Users.Add(new DAL.UserDAL()
+
+            var newUser = new DAL.UserDAL()
             {
                 Email = registerForm.Email,
                 Surname = registerForm.Surname,
@@ -129,11 +130,12 @@ namespace GlobalService.Services
                 Username = registerForm.Email.Split("@")[0],
                 Password = BC.HashPassword(registerForm.Password),
                 RoleId = GetRoleByEnum(Roles.User)
-            });
+            };
 
+            _dbContext.Users.Add(newUser);
             _dbContext.SaveChanges();
 
-            return newUser != null;
+            return newUser.UserId != default;
         }
 
         public AuthDTO GetToken(LoginFormDTO loginForm)

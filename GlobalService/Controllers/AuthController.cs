@@ -23,6 +23,12 @@ namespace GlobalService.Controllers
             _userService = userService;
         }
 
+        [HttpGet("ping")]
+        public ActionResult Ping()
+        {
+            return Ok("pong");
+        }
+
         [HttpPost("token")]
         public ActionResult<AuthDTO> GetToken(LoginFormDTO loginForm)
         {

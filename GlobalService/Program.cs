@@ -50,11 +50,11 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
 
-var options = new DbContextOptionsBuilder<GloablContext>()
+var options = new DbContextOptionsBuilder<GloabalContext>()
                    .UseInMemoryDatabase(databaseName: dbName)
                    .Options;
 
-builder.Services.AddDbContext<GloablContext>(option => 
+builder.Services.AddDbContext<GloabalContext>(option => 
     option.UseInMemoryDatabase(dbName)
 );
 
@@ -78,9 +78,6 @@ app.UseCors("corsapp");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
 
 app.MapHub<ChatHub>("/chat");
 

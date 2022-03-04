@@ -17,10 +17,10 @@ namespace GlobalService.Services
 {
     public class UserService : IUserService
     {
-        private readonly GloablContext _dbContext;
+        private readonly GloabalContext _dbContext;
         protected readonly IConfiguration _configuration;
 
-        public UserService(GloablContext dbContext, IConfiguration configuration)
+        public UserService(GloabalContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _configuration = configuration;

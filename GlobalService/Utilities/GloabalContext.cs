@@ -3,9 +3,9 @@ using GlobalService.DAL;
 
 namespace GlobalService.Utilities
 {
-    public class GloablContext : DbContext
+    public class GloabalContext : DbContext
     {
-        public GloablContext(DbContextOptions<GloablContext> options) : base(options)
+        public GloabalContext(DbContextOptions<GloabalContext> options) : base(options)
         {
             
         }
@@ -16,9 +16,9 @@ namespace GlobalService.Utilities
 
     public static class UserContextInitializer
     {
-        public static void InitDbContext(DbContextOptions<GloablContext>  options)
+        public static void InitDbContext(DbContextOptions<GloabalContext>  options)
         {
-            using (var context = new GloablContext(options))
+            using (var context = new GloabalContext(options))
             {
                 var roles = new List<RoleDAL>();
                 foreach(Roles role in Enum.GetValues(typeof(Roles)))

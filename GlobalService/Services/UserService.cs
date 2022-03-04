@@ -34,7 +34,7 @@ namespace GlobalService.Services
 
         private UserDAL GetUserByEmail(string email)
         {
-            return _dbContext.Users.Include(x => x.Role).Where(x => x.Email == email && x.Enabled).FirstOrDefault();
+            return _dbContext.Users.Include(x => x.Role).Where(x => x.Email.ToLower() == email.ToLower() && x.Enabled).FirstOrDefault();
         }
 
         private Guid GetRoleByEnum(Roles role)
@@ -129,7 +129,8 @@ namespace GlobalService.Services
                 Name = registerForm.Name,
                 Username = registerForm.Email.Split("@")[0],
                 Password = BC.HashPassword(registerForm.Password),
-                RoleId = GetRoleByEnum(Roles.User)
+                RoleId = GetRoleByEnum(Roles.User),
+                Enabled = true
             };
 
             _dbContext.Users.Add(newUser);

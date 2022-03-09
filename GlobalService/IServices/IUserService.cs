@@ -7,6 +7,7 @@ namespace GlobalService.IServices
     public interface IUserService
     {
         UserDTO GetUser(Guid uuid);
+        List<UserDTO> GetUsers();
         UserDTO UpdateUser(UserDTO user);
         void DeleteUser(Guid uuid);
 

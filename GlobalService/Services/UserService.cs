@@ -87,6 +87,26 @@ namespace GlobalService.Services
             };
         }
 
+        public List<UserDTO> GetUsers()
+        {
+            var dbUsers = _dbContext.Users.Where(x => x.Enabled).ToList();
+
+            var users = new List<UserDTO>();
+            dbUsers.ForEach(user =>
+            {
+                users.Add(new UserDTO()
+                {
+                    UserId = user.UserId,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Name = user.Name,
+                    Surname = user.Surname
+                });
+            });
+
+            return users;
+        }
+
         public UserDTO UpdateUser(UserDTO user)
         {
             var userToUpdate = GetUserDb(user.UserId);
@@ -142,9 +162,12 @@ namespace GlobalService.Services
         public AuthDTO GetToken(LoginFormDTO loginForm)
         {
             var user = GetUserByEmail(loginForm.Email);
+
+            if (user == null) return null;
+
             var isValid = BC.Verify(loginForm.Password, user.Password);
 
-            if (user == null && !isValid) return null;
+            if (!isValid) return null;
 
             // authentication successful so generate jwt token
             var token = generateJwtToken(user);

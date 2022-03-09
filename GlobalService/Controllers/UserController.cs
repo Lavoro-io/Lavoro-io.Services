@@ -8,6 +8,7 @@ using System.Net.Http;
 
 namespace GlobalService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -21,8 +22,7 @@ namespace GlobalService.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet(nameof(GetUser))]
         public ActionResult<UserDTO> GetUser(Guid uuid)
         {
             var user = _userService.GetUser(uuid);
@@ -32,8 +32,17 @@ namespace GlobalService.Controllers
             return Ok(user);   
         }
 
-        [HttpPut]
-        [Authorize]
+        [HttpGet(nameof(GetUsers))]
+        public ActionResult<List<UserDTO>> GetUsers()
+        {
+            var users = _userService.GetUsers();
+
+            if (!users.Any()) return NotFound("No users found");
+
+            return Ok(users);
+        }
+
+        [HttpPut(nameof(UpdateUser))]
         public ActionResult<UserDTO> UpdateUser(UpdateUserDTO user)
         {
             var contextUser = (UserDTO)HttpContext.Items["user"];

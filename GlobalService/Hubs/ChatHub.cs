@@ -1,4 +1,5 @@
-﻿using GlobalService.IServices;
+﻿using GlobalService.DTO;
+using GlobalService.IServices;
 using GlobalService.Utilities;
 using Microsoft.AspNetCore.SignalR;
 
@@ -16,20 +17,21 @@ namespace GlobalService.Hubs
             this._userService = userService;
         }
 
-        private string GetUserIdContext()
+        private UserDTO GetUserContext()
         {
             var httpContext = Context.GetHttpContext();
             var userId = httpContext?.Request.Query["uuid"];
-            return userId;
+            var user = _userService.GetUser(new Guid(userId));
+            return user;
         }
 
         public override Task OnConnectedAsync()
         {
-            var userId = GetUserIdContext();
+            var user = GetUserContext();
 
-            if (!_connections.GetConnections(userId).Contains(Context.ConnectionId))
+            if (!_connections.GetConnections(user.UserId.ToString()).Contains(Context.ConnectionId))
             {
-                _connections.Add(userId, Context.ConnectionId);
+                _connections.Add(user.UserId.ToString(), Context.ConnectionId);
             }
 
             return base.OnConnectedAsync();
@@ -37,20 +39,20 @@ namespace GlobalService.Hubs
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            var userId = GetUserIdContext();
+            var user = GetUserContext();
 
-            _connections.Remove(userId, Context.ConnectionId);
+            _connections.Remove(user.UserId.ToString(), Context.ConnectionId);
 
             return base.OnDisconnectedAsync(exception);
         }
 
         public void SendChatMessage(string userId, string message)
         {
-            var senderId = GetUserIdContext();
+            var sender = GetUserContext();
 
             var connectionId = _connections.GetConnection(userId);
 
-            var _message = senderId + ": " + message;
+            var _message = sender.Username + ": " + message;
             Clients.Client(connectionId).SendAsync("addChatMessage", _message);      
         }
     }

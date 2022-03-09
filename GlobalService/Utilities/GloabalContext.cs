@@ -33,11 +33,33 @@ namespace GlobalService.Utilities
                 {
                     new UserDAL()
                     {
-                        UserId = new Guid("fc0bb1cc-0a93-406f-bf39-9be7ab81438b"),
-                        Username = "Dev",
+                        UserId = new Guid(),
+                        Username = "FullDev",
                         Name = "Developer",
                         Surname = "Fullstack",
-                        Email = "dev@example.com",
+                        Email = "fulldev@example.com",
+                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                        RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
+                        Enabled = true
+                    },
+                    new UserDAL()
+                    {
+                        UserId = new Guid(),
+                        Username = "BackDev",
+                        Name = "Developer",
+                        Surname = "Backend",
+                        Email = "backdev@example.com",
+                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                        RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
+                        Enabled = true
+                    },
+                    new UserDAL()
+                    {
+                        UserId = new Guid(),
+                        Username = "FrontDev",
+                        Name = "Developer",
+                        Surname = "Frontend",
+                        Email = "frontdev@example.com",
                         Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
                         RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
                         Enabled = true

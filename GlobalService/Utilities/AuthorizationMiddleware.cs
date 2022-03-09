@@ -51,7 +51,8 @@ namespace GlobalService.Utilities
                 Guid uuid = Guid.Parse(jwtToken.Claims.First(x => x.Type.ToLower() == "uuid".ToLower()).Value);
 
                 // attach user to context on successful jwt validation
-                context.Items["user"] = userService.GetUser(uuid); //get user by uuid
+                var user = userService.GetUser(uuid); //get user by uuid
+                context.Items["user"] = user;
             }
             catch
             {

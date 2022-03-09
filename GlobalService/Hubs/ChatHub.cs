@@ -1,4 +1,5 @@
-﻿using GlobalService.Utilities;
+﻿using GlobalService.IServices;
+using GlobalService.Utilities;
 using Microsoft.AspNetCore.SignalR;
 
 namespace GlobalService.Hubs
@@ -8,15 +9,22 @@ namespace GlobalService.Hubs
     {
         private readonly static HubManager<string> _connections =
             new HubManager<string>();
+        private readonly IUserService _userService;
+
+        public ChatHub(IUserService userService)
+        {
+            this._userService = userService;
+        }
 
         public override Task OnConnectedAsync()
         {
-            string name = Context.User.Identity.Name;
+            var httpContext = Context.GetHttpContext();
+            var user = httpContext?.Items["user"];
 
-            if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
-            {
-                _connections.Add(name, Context.ConnectionId);
-            }
+            // if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
+            // {
+            //     _connections.Add(name, Context.ConnectionId);
+            // }
 
             return base.OnConnectedAsync();
         }

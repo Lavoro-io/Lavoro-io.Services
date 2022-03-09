@@ -16,36 +16,42 @@ namespace GlobalService.Hubs
             this._userService = userService;
         }
 
-        public override Task OnConnectedAsync()
+        private string GetUserIdContext()
         {
             var httpContext = Context.GetHttpContext();
-            var user = httpContext?.Items["user"];
+            var userId = httpContext?.Request.Query["uuid"];
+            return userId;
+        }
 
-            // if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
-            // {
-            //     _connections.Add(name, Context.ConnectionId);
-            // }
+        public override Task OnConnectedAsync()
+        {
+            var userId = GetUserIdContext();
+
+            if (!_connections.GetConnections(userId).Contains(Context.ConnectionId))
+            {
+                _connections.Add(userId, Context.ConnectionId);
+            }
 
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            string name = Context.User.Identity.Name;
+            var userId = GetUserIdContext();
 
-            _connections.Remove(name, Context.ConnectionId);
+            _connections.Remove(userId, Context.ConnectionId);
 
             return base.OnDisconnectedAsync(exception);
         }
 
-        public void SendChatMessage(string who, string message)
+        public void SendChatMessage(string userId, string message)
         {
-            string name = Context.User.Identity.Name;
+            var senderId = GetUserIdContext();
 
-            foreach (var connectionId in _connections.GetConnections(who))
-            {
-                Clients.Client(connectionId).SendAsync("addChatMessage", name + ": " + message);
-            }
+            var connectionId = _connections.GetConnection(userId);
+
+            var _message = senderId + ": " + message;
+            Clients.Client(connectionId).SendAsync("addChatMessage", _message);      
         }
     }
 }

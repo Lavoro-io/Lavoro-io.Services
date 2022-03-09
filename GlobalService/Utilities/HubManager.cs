@@ -42,6 +42,8 @@
             return Enumerable.Empty<string>();
         }
 
+        public string GetConnection(T key) => GetConnections(key).FirstOrDefault();
+
         public void Remove(T key, string connectionId)
         {
             lock (_connections)

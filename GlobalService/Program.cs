@@ -3,17 +3,11 @@ using GlobalService.IServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using GlobalService.Hubs;
-using Azure.Identity;
-using Azure.Extensions.AspNetCore.Configuration.Secrets;
-using Azure.Security.KeyVault.Secrets;
 
 const string dbName = "LVR-IO";
 
 #region Service
 var builder = WebApplication.CreateBuilder(args);
-
-var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -10,6 +10,14 @@ namespace GlobalService.Utilities
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+#if !DEBUG
+            Database.Migrate();
+#endif
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<UserDAL> Users { get; set; }
         public DbSet<RoleDAL> Roles { get; set; }
     }

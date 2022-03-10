@@ -62,11 +62,18 @@ var options = new DbContextOptionsBuilder<GloabalContext>()
                    .UseInMemoryDatabase(databaseName: dbName)
                    .Options;
 
-builder.Services.AddDbContext<GloabalContext>(option => 
+builder.Services.AddDbContext<GloabalContext>(option =>
+#if DEBUG
     option.UseInMemoryDatabase(dbName)
+#else
+    option.UseSqlServer(builder.Configuration["Settings:LvrIoDb"])
+#endif
 );
 
+#if DEBUG
 UserContextInitializer.InitDbContext(options);
+#endif
+
 #endregion
 
 #region App

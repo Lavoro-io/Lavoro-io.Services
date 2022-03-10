@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GlobalService.IServices;
+using Azure.Identity;
 
 namespace GlobalService.Utilities
 {
@@ -34,8 +35,9 @@ namespace GlobalService.Utilities
         {
             try
             {
+                var jwtSecret = _configuration["JWT_SECRET_KEY"];
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Settings:JwtSecret"]); //Move to a better place and change it
+                var key = Encoding.ASCII.GetBytes(jwtSecret); //Move to a better place and change it
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

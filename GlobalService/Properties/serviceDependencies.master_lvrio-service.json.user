@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2022-03-10T14:03:38.4141552Z"
+    },
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2022-03-10T14:05:56.247678Z"
+    },
+    "signalr1": {
+      "restored": true,
+      "restoreTime": "2022-03-10T14:07:44.1429004Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "d6cb8ffa-f690-4da2-8f07-13ce02093352"
+    },
+    "secrets1.resourceGroupName": {
+      "Name": "secrets1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "DefaultResourceGroup-PAR"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Lavoro-IO"
+    },
+    "secrets1.subscriptionId": {
+      "Name": "secrets1.subscriptionId",
+      "Type": "subscription",
+      "Value": "d6cb8ffa-f690-4da2-8f07-13ce02093352"
+    }
+  }
+}

@@ -44,11 +44,12 @@ namespace GlobalService.Services
 
         private AuthDTO generateJwtToken(UserDAL user)
         {
+            var jwtSecret = _configuration["JWT_SECRET_KEY"];
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
 
             //Temp key for test purpose. Move key on better place
-            var key = Encoding.ASCII.GetBytes(_configuration["Settings:JwtSecret"]);
+            var key = Encoding.ASCII.GetBytes(jwtSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

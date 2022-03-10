@@ -3,8 +3,7 @@ using GlobalService.IServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using GlobalService.Hubs;
-
-const string dbName = "LVR-IO";
+using Microsoft.EntityFrameworkCore.Design;
 
 #region Service
 var builder = WebApplication.CreateBuilder(args);
@@ -59,20 +58,14 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
 
 var options = new DbContextOptionsBuilder<GloabalContext>()
-                   .UseInMemoryDatabase(databaseName: dbName)
+                   .UseSqlServer(builder.Configuration["Settings:LvrIoDb"])
                    .Options;
 
 builder.Services.AddDbContext<GloabalContext>(option =>
-#if DEBUG
-    option.UseInMemoryDatabase(dbName)
-#else
     option.UseSqlServer(builder.Configuration["Settings:LvrIoDb"])
-#endif
 );
 
-#if DEBUG
 UserContextInitializer.InitDbContext(options);
-#endif
 
 #endregion
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using GlobalService.Hubs;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Data.SqlClient;
 
 #region Service
 var builder = WebApplication.CreateBuilder(args);
@@ -57,15 +58,20 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
 
+var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration["Settings:LvrIoDb"]);
+conStrBuilder.Password = builder.Configuration["Secrets:DbPassword"];
+conStrBuilder.UserID = builder.Configuration["Secrets:DbUser"];
+var connection = conStrBuilder.ConnectionString;
+
 var options = new DbContextOptionsBuilder<GloabalContext>()
-                   .UseSqlServer(builder.Configuration["Settings:LvrIoDb"])
+                   .UseSqlServer(connection)
                    .Options;
 
 builder.Services.AddDbContext<GloabalContext>(option =>
-    option.UseSqlServer(builder.Configuration["Settings:LvrIoDb"])
+    option.UseSqlServer(connection)
 );
 
-UserContextInitializer.InitDbContext(options);
+//UserContextInitializer.InitDbContext(options); //Use only to add 
 
 #endregion
 

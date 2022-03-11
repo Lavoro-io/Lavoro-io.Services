@@ -20,55 +20,60 @@ namespace GlobalService.Utilities
         {
             using (var context = new GloabalContext(options))
             {
-                var roles = new List<RoleDAL>();
-                foreach(Roles role in Enum.GetValues(typeof(Roles)))
+                if(!context.Roles.Any())
                 {
-                    roles.Add(new RoleDAL(){Name = role.ToString(), RoleEnum = role});
+                    var roles = new List<RoleDAL>();
+                    foreach(Roles role in Enum.GetValues(typeof(Roles)))
+                    {
+                        roles.Add(new RoleDAL(){Name = role.ToString(), RoleEnum = role});
+                    }
+                    
+                    context.AddRange(roles);
+                    context.SaveChanges();
                 }
 
-                context.AddRange(roles);
-                context.SaveChanges();
-
-                var users = new List<UserDAL>
+                if(!context.Users.Any())
                 {
-                    new UserDAL()
+                    var users = new List<UserDAL>
                     {
-                        UserId = new Guid(),
-                        Username = "FullDev",
-                        Name = "Developer",
-                        Surname = "Fullstack",
-                        Email = "fulldev@example.com",
-                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
-                        RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                        Enabled = true
-                    },
-                    new UserDAL()
-                    {
-                        UserId = new Guid(),
-                        Username = "BackDev",
-                        Name = "Developer",
-                        Surname = "Backend",
-                        Email = "backdev@example.com",
-                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
-                        RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                        Enabled = true
-                    },
-                    new UserDAL()
-                    {
-                        UserId = new Guid(),
-                        Username = "FrontDev",
-                        Name = "Developer",
-                        Surname = "Frontend",
-                        Email = "frontdev@example.com",
-                        Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
-                        RoleId = roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                        Enabled = true
-                    },
-                };
+                        new UserDAL()
+                        {
+                            UserId = new Guid(),
+                            Username = "FullDev",
+                            Name = "Developer",
+                            Surname = "Fullstack",
+                            Email = "fulldev@example.com",
+                            Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                            RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
+                            Enabled = true
+                        },
+                        new UserDAL()
+                        {
+                            UserId = new Guid(),
+                            Username = "BackDev",
+                            Name = "Developer",
+                            Surname = "Backend",
+                            Email = "backdev@example.com",
+                            Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                            RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
+                            Enabled = true
+                        },
+                        new UserDAL()
+                        {
+                            UserId = new Guid(),
+                            Username = "FrontDev",
+                            Name = "Developer",
+                            Surname = "Frontend",
+                            Email = "frontdev@example.com",
+                            Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
+                            RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
+                            Enabled = true
+                        },
+                    };
 
-                context.AddRange(users);
-                context.SaveChanges();
-
+                    context.AddRange(users);
+                    context.SaveChanges();
+                }
             }
         }
     }

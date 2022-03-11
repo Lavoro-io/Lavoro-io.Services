@@ -12,6 +12,8 @@ using System.Security.Claims;
 using BC = BCrypt.Net.BCrypt;
 using Saml;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 
 namespace GlobalService.Services
 {
@@ -141,7 +143,6 @@ namespace GlobalService.Services
 
         public bool RegisterUser(RegisterFormDTO registerForm)
         {
-
             var newUser = new DAL.UserDAL()
             {
                 Email = registerForm.Email,

@@ -24,7 +24,7 @@ namespace GlobalService.DAL
         [Required]
         public string Email { get; set; }
 
-        [Required, MaxLength(32), MinLength(8)]
+        [Required, MinLength(8)]
         public string Password { get; set; }
 
         public Guid RoleId { get; set; }

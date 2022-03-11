@@ -11,6 +11,6 @@ dotnet build
 
 dotnet ef migrations add %dateTime%
 
-dotnet ef migrations script -o "..\MigrationsScript\db_%dateTime%.txt"
+dotnet ef migrations script %dateTime% -o "..\MigrationsScript\db_%dateTime%.txt"
 
 @echo OK

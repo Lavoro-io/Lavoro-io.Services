@@ -5,6 +5,9 @@ using Microsoft.OpenApi.Models;
 using GlobalService.Hubs;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 #region Service
 var builder = WebApplication.CreateBuilder(args);
@@ -47,14 +50,16 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.AllowAnyMethod()
-           .AllowAnyHeader()
-           .AllowCredentials()
-           .WithOrigins("https://lavoro-io.azurewebsites.net",
-                        "http://localhost:4200");
-}));
+builder.Services.AddCors(p => 
+    p.AddPolicy("corsapp", builder =>
+        {
+            builder.AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials()
+                   .WithOrigins("https://lavoro-io.azurewebsites.net",
+                                "http://localhost:4200");
+        })
+    );
 
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
 

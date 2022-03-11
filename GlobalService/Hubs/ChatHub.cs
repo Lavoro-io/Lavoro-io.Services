@@ -2,6 +2,9 @@
 using GlobalService.IServices;
 using GlobalService.Utilities;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GlobalService.Hubs
 {

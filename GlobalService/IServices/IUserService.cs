@@ -1,6 +1,8 @@
 using Saml;
 using System;
 using GlobalService.DTO;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace GlobalService.IServices
 {

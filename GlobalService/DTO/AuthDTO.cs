@@ -1,4 +1,6 @@
-﻿namespace GlobalService.DTO
+﻿using System;
+
+namespace GlobalService.DTO
 {
     public class AuthDTO
     {

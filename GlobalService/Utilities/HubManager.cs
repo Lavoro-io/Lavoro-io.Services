@@ -1,4 +1,7 @@
-﻿namespace GlobalService.Utilities
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace GlobalService.Utilities
 {
     public class HubManager<T>
     {

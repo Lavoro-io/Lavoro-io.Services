@@ -5,6 +5,8 @@ using GlobalService.DTO;
 using System;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GlobalService.Controllers
 {

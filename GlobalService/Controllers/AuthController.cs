@@ -7,6 +7,8 @@ using System.Text;
 using GlobalService.DAL;
 using GlobalService.DTO;
 using GlobalService.IServices;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace GlobalService.Controllers
 {

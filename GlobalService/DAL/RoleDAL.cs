@@ -8,7 +8,7 @@ namespace GlobalService.DAL
 {
     [Table("Roles")]
     [Index(nameof(Name), nameof(RoleEnum))]
-    public class RoleDAL
+    public class RoleDAL : BaseDAL
     {
         [Key]
         public Guid RoleId { get; set; }

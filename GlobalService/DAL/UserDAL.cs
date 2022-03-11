@@ -7,7 +7,7 @@ namespace GlobalService.DAL
 {
     [Table("Users")]
     [Index(nameof(Username), nameof(Email))]
-    public class UserDAL
+    public class UserDAL : BaseDAL
     {
         [Key]
         public Guid UserId { get; set; }

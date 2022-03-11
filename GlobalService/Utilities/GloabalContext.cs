@@ -10,11 +10,33 @@ namespace GlobalService.Utilities
     {
         public GloabalContext(DbContextOptions<GloabalContext> options) : base(options)
         {
-            
+            this.SavingChanges += DatabaseContext_SavingChanges;
+        }
+
+        private void DatabaseContext_SavingChanges(object sender, SavingChangesEventArgs e)
+        {
+            var now = System.DateTime.UtcNow;
+            foreach (var entry in this.ChangeTracker.Entries<BaseDAL>())
+            {
+                var entity = entry.Entity;
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entity.CreatedAt = now;
+                        entity.LastUpdate = now;
+                        break;
+                    case EntityState.Modified:
+                        entity.LastUpdate = now;
+                        break;
+                }
+            }
+            this.ChangeTracker.DetectChanges();
         }
 
         public DbSet<UserDAL> Users { get; set; }
         public DbSet<RoleDAL> Roles { get; set; }
+        public DbSet<ChatDAL> PrivateChats { get; set; }
+        public DbSet<MessageDAL> Messages { get; set; }
     }
 
     public static class UserContextInitializer

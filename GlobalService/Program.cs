@@ -59,8 +59,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
 
 var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration["Settings:LvrIoDb"]);
-conStrBuilder.Password = builder.Configuration["Secrets:DbPassword"];
-conStrBuilder.UserID = builder.Configuration["Secrets:DbUser"];
+conStrBuilder.Password = builder.Configuration["Settings:DbPassword"];
+conStrBuilder.UserID = builder.Configuration["Settings:DbUser"];
 var connection = conStrBuilder.ConnectionString;
 
 var options = new DbContextOptionsBuilder<GloabalContext>()

@@ -8,5 +8,10 @@ namespace GlobalService.DAL
     {
         [Key]
         public Guid ChatId { get; set; }
+
+        public string ChatName { get; set; }
+
+        public Guid ChatMappingId { get; set; }
+        public ChatMappingDAL ChatMapping { get; set; }
     }
 }

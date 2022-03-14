@@ -14,10 +14,12 @@ namespace GlobalService.Hubs
         private readonly static HubManager<string> _connections =
             new HubManager<string>();
         private readonly IUserService _userService;
+        private readonly IChatService _chatService;
 
-        public ChatHub(IUserService userService)
+        public ChatHub(IUserService userService, IChatService chatService)
         {
             this._userService = userService;
+            this._chatService = chatService;
         }
 
         private UserDTO GetUserContext()
@@ -49,14 +51,28 @@ namespace GlobalService.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public void SendChatMessage(string userId, string message)
+        public void JoinChat(string chatCode)
         {
             var sender = GetUserContext();
 
-            var connectionId = _connections.GetConnection(userId);
+            Groups.AddToGroupAsync(sender.UserId.ToString(), chatCode).RunSynchronously();
+        }
 
-            var _message = sender.Username + ": " + message;
-            Clients.Client(connectionId).SendAsync("addChatMessage", _message);      
+        public void LeaveChat(string chatCode)
+        {
+            var sender = GetUserContext();
+
+            Groups.RemoveFromGroupAsync(sender.UserId.ToString(), chatCode).RunSynchronously();
+        }
+
+        public void SendChatMessage(string chatCode, string message)
+        {
+            var sender = GetUserContext();
+
+            var chat = _chatService.GetChat(new Guid(chatCode));
+            var _message = _chatService.AddMessage(sender.UserId, chat.ChatCode, message);
+
+            Clients.Group(chat.ChatCode.ToString()).SendAsync("addChatMessage", _message);      
         }
     }
 }

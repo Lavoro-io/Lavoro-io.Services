@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GlobalService.Services;
 
 #region Service
 var builder = WebApplication.CreateBuilder(args);
@@ -61,8 +62,11 @@ builder.Services.AddCors(p =>
         })
     );
 
-builder.Services.AddScoped<IUserService, GlobalService.Services.UserService>();
+//register services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
+//create connection string to Db
 var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration["Settings:LvrIoDb"]);
 conStrBuilder.Password = builder.Configuration["Settings:DbPassword"];
 conStrBuilder.UserID = builder.Configuration["Settings:DbUser"];

@@ -35,7 +35,7 @@ namespace GlobalService.Utilities
 
         public DbSet<UserDAL> Users { get; set; }
         public DbSet<RoleDAL> Roles { get; set; }
-        public DbSet<ChatDAL> PrivateChats { get; set; }
+        public DbSet<ChatDAL> Chats { get; set; }
         public DbSet<MessageDAL> Messages { get; set; }
     }
 

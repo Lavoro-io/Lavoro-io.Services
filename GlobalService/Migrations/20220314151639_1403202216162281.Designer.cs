@@ -4,6 +4,7 @@ using GlobalService.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobalService.Migrations
 {
     [DbContext(typeof(GloabalContext))]
-    partial class GloabalContextModelSnapshot : ModelSnapshot
+    [Migration("20220314151639_1403202216162281")]
+    partial class _1403202216162281
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace GlobalService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ChatType")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -44,33 +43,6 @@ namespace GlobalService.Migrations
                     b.HasKey("ChatId");
 
                     b.ToTable("Chats");
-                });
-
-            modelBuilder.Entity("GlobalService.DAL.ChatUsersDAL", b =>
-                {
-                    b.Property<Guid>("ChatUsersId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ChatUsersId");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChatUsers");
                 });
 
             modelBuilder.Entity("GlobalService.DAL.MessageDAL", b =>
@@ -177,25 +149,6 @@ namespace GlobalService.Migrations
                     b.HasIndex("Username", "Email");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("GlobalService.DAL.ChatUsersDAL", b =>
-                {
-                    b.HasOne("GlobalService.DAL.ChatDAL", "Chat")
-                        .WithMany()
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GlobalService.DAL.UserDAL", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GlobalService.DAL.MessageDAL", b =>

@@ -38,13 +38,11 @@ namespace GlobalService.Controllers
         }
 
         [HttpPost(nameof(NewChat))]
-        public ActionResult<ChatDTO> NewChat(List<Guid> uuids)
+        public ActionResult<ChatDTO> NewChat(List<Guid> uuids, ChatType chatType)
         {
-            var chat = _chatService.AddChat(uuids);
+            _chatService.AddChat(uuids, chatType);
 
-            if (chat == null) return Ok("This chat already exist");
-
-            return chat;
+            return Ok();
         }
     }
 }

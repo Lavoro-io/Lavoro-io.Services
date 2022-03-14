@@ -37,6 +37,7 @@ namespace GlobalService.Utilities
         public DbSet<RoleDAL> Roles { get; set; }
         public DbSet<ChatDAL> Chats { get; set; }
         public DbSet<MessageDAL> Messages { get; set; }
+        public DbSet<ChatUsersDAL> ChatUsers { get; set; }
     }
 
     public static class UserContextInitializer

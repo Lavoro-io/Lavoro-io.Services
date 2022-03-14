@@ -20,6 +20,7 @@ namespace GlobalService.Utilities
         }
     }
 
+    #region Enums
     public enum Roles
     {
         Sys = 0,
@@ -27,4 +28,12 @@ namespace GlobalService.Utilities
         Moderator,
         Admin
     }
+
+    public enum ChatType
+    {
+        Sys = 0,
+        Private,
+        Group
+    }
+    #endregion
 }

@@ -2,8 +2,7 @@
 {
     public class ChatDTO
     {
-        public Guid ChatCode { get; set; }
+        public Guid ChatId{ get; set; }
         public string ChatName { get; set; }
-        public List<UserDTO> Users { get; set; }
     }
 }

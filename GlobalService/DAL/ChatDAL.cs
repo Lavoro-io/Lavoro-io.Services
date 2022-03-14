@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GlobalService.Utilities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlobalService.DAL
@@ -11,7 +12,7 @@ namespace GlobalService.DAL
 
         public string ChatName { get; set; }
 
-        public Guid ChatMappingId { get; set; }
-        public ChatMappingDAL ChatMapping { get; set; }
+        public ChatType ChatType { get; set; }
     }
+
 }

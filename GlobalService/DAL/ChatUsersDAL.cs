@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlobalService.DAL
 {
-    [Table("ChatMappings")]
-    public class ChatMappingDAL : BaseDAL
+    [Table("ChatUsers")]
+    public class ChatUsersDAL : BaseDAL
     {
         [Key]
-        public Guid ChatMappingId { get; set; }
+        public Guid ChatUsersId { get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }

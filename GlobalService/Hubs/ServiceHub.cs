@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace GlobalService.Hubs
 {
     [Authorize]
-    public class ChatHub : Hub
+    public class ServiceHub : Hub
     {
         private readonly static HubManager<string> _connections =
             new HubManager<string>();
         private readonly IUserService _userService;
         private readonly IChatService _chatService;
 
-        public ChatHub(IUserService userService, IChatService chatService)
+        public ServiceHub(IUserService userService, IChatService chatService)
         {
             this._userService = userService;
             this._chatService = chatService;

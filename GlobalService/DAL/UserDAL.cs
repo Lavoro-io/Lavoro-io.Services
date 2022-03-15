@@ -30,7 +30,7 @@ namespace GlobalService.DAL
         public Guid RoleId { get; set; }
         public RoleDAL Role { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool IsActive { get; set; }
     }
 }
 

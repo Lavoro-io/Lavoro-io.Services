@@ -31,12 +31,12 @@ namespace GlobalService.Services
         #region Private Methods
         private UserDAL GetUserDb(Guid uuid)
         {
-            return _dbContext.Users.Include(x => x.Role).Where(x => x.UserId == uuid && x.Enabled).FirstOrDefault();
+            return _dbContext.Users.Include(x => x.Role).Where(x => x.UserId == uuid && x.IsActive).FirstOrDefault();
         }
 
         private UserDAL GetUserByEmail(string email)
         {
-            return _dbContext.Users.Include(x => x.Role).Where(x => x.Email.ToLower() == email.ToLower() && x.Enabled).FirstOrDefault();
+            return _dbContext.Users.Include(x => x.Role).Where(x => x.Email.ToLower() == email.ToLower() && x.IsActive).FirstOrDefault();
         }
 
         private Guid GetRoleByEnum(Roles role)
@@ -91,7 +91,7 @@ namespace GlobalService.Services
 
         public List<UserDTO> GetUsers()
         {
-            var dbUsers = _dbContext.Users.Where(x => x.Enabled).ToList();
+            var dbUsers = _dbContext.Users.Where(x => x.IsActive).ToList();
 
             var users = new List<UserDTO>();
             dbUsers.ForEach(user =>
@@ -135,7 +135,7 @@ namespace GlobalService.Services
         {
             var user = GetUserDb(uuid);
 
-            user.Enabled = false;
+            user.IsActive = false;
 
             _dbContext.Update(user);
             _dbContext.SaveChanges();
@@ -151,7 +151,7 @@ namespace GlobalService.Services
                 Username = registerForm.Email.Split("@")[0],
                 Password = BC.HashPassword(registerForm.Password),
                 RoleId = GetRoleByEnum(Roles.User),
-                Enabled = true
+                IsActive = true
             };
 
             _dbContext.Users.Add(newUser);

@@ -23,12 +23,14 @@ namespace GlobalService.Utilities
             {
                 // not logged in
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                return;
             }
 
             Roles userRole = (Roles)Enum.Parse(typeof(Roles), user.Role);
             if(userRole < role)
             {
                 context.Result = new JsonResult(new { message = "Unsufficient permission" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                return;
             }
         }
     }

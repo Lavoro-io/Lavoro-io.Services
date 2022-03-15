@@ -24,7 +24,7 @@ namespace GlobalService.Controllers
         {
             var chats = _chatService.GetChats(uuid);
 
-            if (!chats.Any()) return NotFound("No chats");
+            if (chats == null || !chats.Any()) return NotFound("No chats");
 
             return Ok(chats);
         }
@@ -38,9 +38,17 @@ namespace GlobalService.Controllers
         }
 
         [HttpPost(nameof(NewChat))]
-        public ActionResult<ChatDTO> NewChat(List<Guid> uuids, ChatType chatType)
+        public ActionResult NewChat(List<Guid> uuids, ChatType chatType)
         {
             _chatService.AddChat(uuids, chatType);
+
+            return Ok();
+        }
+
+        [HttpDelete(nameof(RemoveChat))]
+        public ActionResult RemoveChat(Guid chatId)
+        {
+            _chatService.RemoveChat(chatId);
 
             return Ok();
         }

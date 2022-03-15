@@ -13,6 +13,8 @@ namespace GlobalService.DAL
         public string ChatName { get; set; }
 
         public ChatType ChatType { get; set; }
+
+        public bool IsActive { get; set; }
     }
 
 }

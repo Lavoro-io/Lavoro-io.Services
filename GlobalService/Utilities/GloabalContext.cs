@@ -71,7 +71,7 @@ namespace GlobalService.Utilities
                             Email = "fulldev@example.com",
                             Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
                             RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                            Enabled = true
+                            IsActive = true
                         },
                         new UserDAL()
                         {
@@ -82,7 +82,7 @@ namespace GlobalService.Utilities
                             Email = "backdev@example.com",
                             Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
                             RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                            Enabled = true
+                            IsActive = true
                         },
                         new UserDAL()
                         {
@@ -93,7 +93,7 @@ namespace GlobalService.Utilities
                             Email = "frontdev@example.com",
                             Password = BCrypt.Net.BCrypt.HashPassword("12345678"),
                             RoleId = context.Roles.Where(x => x.RoleEnum == Roles.Admin).First().RoleId,
-                            Enabled = true
+                            IsActive = true
                         },
                     };
 

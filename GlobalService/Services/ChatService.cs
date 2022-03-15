@@ -17,17 +17,18 @@ namespace GlobalService.Services
 
         public void AddChat(List<Guid> uuids, ChatType chatType)
         {
-            var users = _dbContext.Users.Where(x => x.Enabled && uuids.Any(y => y == x.UserId)).ToList();
+            var users = _dbContext.Users.Where(x => x.IsActive && uuids.Any(y => y == x.UserId)).ToList();
             var chatName = "";
             users.ForEach(user =>
             {
-                chatName += chatName + user.Name + " " + user.Surname + ", ";
+                chatName += user.Name + " " + user.Surname + ", ";
             });
 
             var chat = new ChatDAL()
             {
                 ChatType = chatType,
-                ChatName = chatName
+                ChatName = chatName,
+                IsActive = true,
             };
 
             _dbContext.Chats.Add(chat);
@@ -67,17 +68,73 @@ namespace GlobalService.Services
 
         public ChatDTO GetChat(Guid chatId)
         {
-            throw new NotImplementedException();
+            var chat = _dbContext.Chats.Where(x => x.ChatId == chatId).FirstOrDefault();
+
+            if (chat == null) return null;
+
+            var chatdto = new ChatDTO()
+            {
+                ChatId = chat.ChatId,
+                ChatName = chat.ChatName,
+                ChatType = chat.ChatType
+            };
+
+            return chatdto;
         }
 
         public List<ChatDTO> GetChats(Guid uuid)
         {
-            throw new NotImplementedException();
+            var chats = _dbContext.ChatUsers.Include(x => x.Chat)
+                                            .Where(x => x.Chat.IsActive && x.User.UserId == uuid)
+                                            .Select(x => x.Chat)
+                                            .ToList();
+
+            if (!chats.Any()) return null;
+
+            var chatsDto = new List<ChatDTO>();
+            foreach(var chat in chats)
+            {
+                var chatdto = new ChatDTO()
+                {
+                    ChatId = chat.ChatId,
+                    ChatName = chat.ChatName,
+                    ChatType = chat.ChatType
+                };
+                chatsDto.Add(chatdto);
+            }
+
+            return chatsDto;
         }
 
         public List<MessageDTO> GetMessages(Guid chatId)
         {
-            throw new NotImplementedException();
+            var messages = _dbContext.Messages.Where(x => x.ChatId == chatId).ToList();
+
+            var messagesDto = new List<MessageDTO>();
+            foreach (var message in messages)
+            {
+                var messageDto = new MessageDTO()
+                {
+                    MessageId = message.MessageId,
+                    UserId = message.UserId,
+                    Message = message.Message,
+                    CreatedAt = message.CreatedAt.Ticks,
+                    UpdatedAt = message.LastUpdate.Ticks
+                };
+                messagesDto.Add(messageDto);
+            };
+
+            return messagesDto;
+        }
+
+        public void RemoveChat(Guid chatId)
+        {
+            var chat = _dbContext.Chats.Where(x => x.ChatId == chatId).FirstOrDefault();
+
+            chat.IsActive = false;
+
+            _dbContext.Chats.Update(chat);
+            _dbContext.SaveChanges();
         }
     }
 }

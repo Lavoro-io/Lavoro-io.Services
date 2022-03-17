@@ -51,28 +51,34 @@ namespace GlobalService.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        //public void JoinChat(string chatId)
-        //{
-        //    var sender = GetUserContext();
+        #region ChatService
+        public void JoinChat(string chatId)
+        {
+            var sender = GetUserContext();
 
-        //    Groups.AddToGroupAsync(sender.UserId.ToString(), chatId).RunSynchronously();
-        //}
+            var connectionId = _connections.GetConnection(sender.UserId.ToString());
 
-        //public void LeaveChat(string chatId)
-        //{
-        //    var sender = GetUserContext();
+            Groups.AddToGroupAsync(connectionId, chatId);
+        }
 
-        //    Groups.RemoveFromGroupAsync(sender.UserId.ToString(), chatId).RunSynchronously();
-        //}
+        public void LeaveChat(string chatId)
+        {
+            var sender = GetUserContext();
 
-        //public void SendChatMessage(string chatId, string message)
-        //{
-        //    var sender = GetUserContext();
+            var connectionId = _connections.GetConnection(sender.UserId.ToString());
 
-        //    var chat = _chatService.GetChat(new Guid(chatId));
-        //    var _message = _chatService.AddMessage(sender.UserId, chat.ChatId, message);
+            Groups.RemoveFromGroupAsync(connectionId, chatId);
+        }
 
-        //    Clients.Group(chat.ChatId.ToString()).SendAsync("addChatMessage", _message);      
-        //}
+        public void SendChatMessage(string chatId, string message)
+        {
+            var sender = GetUserContext();
+            var _chatId = new Guid(chatId);
+
+            var _message = _chatService.AddMessage(sender.UserId, _chatId, message);
+
+            Clients.Group(_chatId.ToString()).SendAsync("addChatMessage", _message);
+        }
+        #endregion
     }
 }

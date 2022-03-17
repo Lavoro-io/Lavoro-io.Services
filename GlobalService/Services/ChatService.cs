@@ -62,7 +62,9 @@ namespace GlobalService.Services
             return new MessageDTO()
             {
                  UserId = userId,
-                 Message = message
+                 Message = message,
+                 CreatedAt = messageDb.CreatedAt.Ticks,
+                 UpdatedAt = messageDb.LastUpdate.Ticks
             };
         }
 
@@ -132,6 +134,9 @@ namespace GlobalService.Services
             var chat = _dbContext.Chats.Where(x => x.ChatId == chatId).FirstOrDefault();
 
             chat.IsActive = false;
+
+            var messages = _dbContext.Messages.Where(x => x.ChatId == chatId);
+            _dbContext.Messages.RemoveRange(messages);
 
             _dbContext.Chats.Update(chat);
             _dbContext.SaveChanges();

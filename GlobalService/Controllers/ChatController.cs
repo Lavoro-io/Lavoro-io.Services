@@ -52,5 +52,15 @@ namespace GlobalService.Controllers
 
             return Ok();
         }
+
+        [HttpGet(nameof(GetMessages))]
+        public ActionResult<List<MessageDTO>> GetMessages(Guid chatId)
+        {
+            var messages = _chatService.GetMessages(chatId);
+
+            if (!messages.Any()) return NotFound("No messages found");
+
+            return messages;
+        }
     }
 }

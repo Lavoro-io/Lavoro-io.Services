@@ -31,6 +31,9 @@ namespace GlobalService.DAL
         public RoleDAL Role { get; set; }
 
         public bool IsActive { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
+        public byte[] BackgroundImage { get; set; }
     }
 }
 

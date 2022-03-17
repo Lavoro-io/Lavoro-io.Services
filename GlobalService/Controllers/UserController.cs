@@ -53,7 +53,9 @@ namespace GlobalService.Controllers
                 UserId = contextUser.UserId,
                 Username = user.Username,
                 Name = user.Name,
-                Surname = user.Surname
+                Surname = user.Surname,
+                ProfilePicture = user.ProfilePicture,
+                BackgroundImage = user.BackgroundImage
             });
 
             return Ok(newUser);

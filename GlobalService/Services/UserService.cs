@@ -85,7 +85,10 @@ namespace GlobalService.Services
                 Email = user.Email,
                 Name = user.Name,
                 Surname = user.Surname,
-                Role = user.Role.Name
+                Role = user.Role.Name,
+
+                ProfilePicture = Encoding.ASCII.GetString(user.ProfilePicture),
+                BackgroundImage = Encoding.ASCII.GetString(user.BackgroundImage),
             };
         }
 
@@ -114,9 +117,11 @@ namespace GlobalService.Services
             var userToUpdate = GetUserDb(user.UserId);
 
             userToUpdate.Username = user.Username;
-            //userToUpdate.Email = user.Email;
             userToUpdate.Surname = user.Surname;
             userToUpdate.Name = user.Name;
+
+            userToUpdate.ProfilePicture = Encoding.ASCII.GetBytes(user.ProfilePicture ?? "");
+            userToUpdate.BackgroundImage = Encoding.ASCII.GetBytes(user.BackgroundImage ?? "");
 
             _dbContext.Users.Update(userToUpdate);
             _dbContext.SaveChanges();
@@ -127,7 +132,10 @@ namespace GlobalService.Services
                 Username = userToUpdate.Username,
                 Email = userToUpdate.Email,
                 Name = userToUpdate.Name,
-                Surname = userToUpdate.Surname
+                Surname = userToUpdate.Surname,
+
+                ProfilePicture = Encoding.ASCII.GetString(userToUpdate.ProfilePicture),
+                BackgroundImage = Encoding.ASCII.GetString(userToUpdate.BackgroundImage),
             };
         }
 

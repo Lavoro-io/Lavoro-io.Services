@@ -159,7 +159,10 @@ namespace GlobalService.Services
                 Username = registerForm.Email.Split("@")[0],
                 Password = BC.HashPassword(registerForm.Password),
                 RoleId = GetRoleByEnum(Roles.User),
-                IsActive = true
+                IsActive = true,
+
+                ProfilePicture = Encoding.ASCII.GetBytes(""),
+                BackgroundImage = Encoding.ASCII.GetBytes(""),
             };
 
             _dbContext.Users.Add(newUser);

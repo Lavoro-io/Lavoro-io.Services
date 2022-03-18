@@ -69,7 +69,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 
 //create connection string to Db
-var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration["Settings:LvrIoDb"]);
+var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("LvrIoDb"));
 //conStrBuilder.Password = builder.Configuration["Settings:DbPassword"];
 //conStrBuilder.UserID = builder.Configuration["Settings:DbUser"];
 var connection = conStrBuilder.ConnectionString;

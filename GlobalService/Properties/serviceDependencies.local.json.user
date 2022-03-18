@@ -1,20 +1,4 @@
 {
-  "dependencies": {
-    "mssql1": {
-      "restored": true,
-      "restoreTime": "2022-03-18T08:49:11.8698333Z"
-    }
-  },
-  "parameters": {
-    "mssql1.subscriptionId": {
-      "Name": "mssql1.subscriptionId",
-      "Type": "subscription",
-      "Value": "3a9cddbd-705e-4d8f-9aa3-b5aabf7baf99"
-    },
-    "mssql1.resourceGroupName": {
-      "Name": "mssql1.resourceGroupName",
-      "Type": "resourceGroup",
-      "Value": "Lavoro-IO"
-    }
-  }
+  "dependencies": {},
+  "parameters": {}
 }

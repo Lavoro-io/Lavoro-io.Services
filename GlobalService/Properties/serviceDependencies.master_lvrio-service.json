@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/lvr-io/databases/LVR-IO-DB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:LvrIoDb"
+    },
+    "signalr1": {
+      "ignored": "true",
+      "suggestion": "true",
+      "type": "signalr",
+      "connectionId": ""
+    }
+  }
+}

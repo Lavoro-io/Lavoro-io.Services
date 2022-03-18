@@ -70,8 +70,8 @@ builder.Services.AddScoped<IChatService, ChatService>();
 
 //create connection string to Db
 var conStrBuilder = new SqlConnectionStringBuilder(builder.Configuration["Settings:LvrIoDb"]);
-conStrBuilder.Password = builder.Configuration["Settings:DbPassword"];
-conStrBuilder.UserID = builder.Configuration["Settings:DbUser"];
+//conStrBuilder.Password = builder.Configuration["Settings:DbPassword"];
+//conStrBuilder.UserID = builder.Configuration["Settings:DbUser"];
 var connection = conStrBuilder.ConnectionString;
 
 var options = new DbContextOptionsBuilder<GloabalContext>()

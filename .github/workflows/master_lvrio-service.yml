@@ -40,8 +40,7 @@ jobs:
           files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
         env:
           Settings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
-          Settings.DbPassword: ${{ secrets.DB_PASSWORD }}
-          Settings.DbUser: ${{ secrets.DB_USER }}
+          Settings.LvrIoDb: ${{ secrets.CONNECTION_STRING }}
           App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
   deploy:

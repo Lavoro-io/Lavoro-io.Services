@@ -89,17 +89,10 @@ builder.Services.AddDbContext<GloabalContext>(option =>
 #region App
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+// global error handler
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
-    var logger = services.GetService<ILogger<Program>>();
-
-    app.ConfigureExceptionHandler(logger);
-
-    logger.LogInformation("Service Started");
-}
-
+// custom auth middleware
 app.UseMiddleware<AuthorizationMiddleware>();
 
 // Configure the HTTP request pipeline.

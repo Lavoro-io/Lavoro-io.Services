@@ -13,6 +13,8 @@ using GlobalService.Services;
 #region Service
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddConsole();
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -86,6 +88,17 @@ builder.Services.AddDbContext<GloabalContext>(option =>
 
 #region App
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var logger = services.GetService<ILogger<Program>>();
+
+    app.ConfigureExceptionHandler(logger);
+
+    logger.LogInformation("Service Started");
+}
 
 app.UseMiddleware<AuthorizationMiddleware>();
 

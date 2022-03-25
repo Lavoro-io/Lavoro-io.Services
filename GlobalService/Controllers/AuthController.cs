@@ -65,5 +65,12 @@ namespace GlobalService.Controllers
 
             return Ok(added);
         }
+
+        [HttpPost(nameof(NotificationFromDevOps))]
+        public ActionResult NotificationFromDevOps(object json)
+        {
+            _logger.LogInformation(json.ToString());
+            return Ok();
+        }
     }
 }
